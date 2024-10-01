@@ -1,0 +1,32 @@
+<div id="map"></div>
+<script>
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const { latitude, longitude } = position.coords;
+        // Show a map centered at latitude / longitude.
+        document.getElementById('map').innerHTML = 
+          '<iframe width="700" height="300" src="https://maps.google.com/maps?q=' + 
+          latitude + ',' + longitude + '&z=15&output=embed"></iframe>';
+      },
+      error => {
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+          case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+          case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+          case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+        }
+      }
+    );
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+</script>
